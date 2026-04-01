@@ -11,6 +11,8 @@ import {
 } from "recharts";
 import { formatCurrency } from "../../../shared/utils/formatters";
 import { useTransactionSummary } from "../../transactions/hooks/useTransactionSummary";
+import { DashboardChartSection } from "./DashboardChartSection";
+import { SummaryStatCard } from "./SummaryStatCard";
 
 export const DashboardSummary = () => {
   const {
@@ -29,90 +31,74 @@ export const DashboardSummary = () => {
       </header>
 
       <div className="grid gap-4 sm:grid-cols-3">
-        <article className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
-          <p className="text-sm text-slate-500">Total Balance</p>
-          <p className="mt-1 text-2xl font-semibold text-slate-900">
-            {formatCurrency(totalBalance)}
-          </p>
-        </article>
+        <SummaryStatCard
+          label="Total Balance"
+          value={formatCurrency(totalBalance)}
+        />
 
-        <article className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
-          <p className="text-sm text-slate-500">Total Income</p>
-          <p className="mt-1 text-2xl font-semibold text-emerald-600">
-            {formatCurrency(totalIncome)}
-          </p>
-        </article>
+        <SummaryStatCard
+          label="Total Income"
+          value={formatCurrency(totalIncome)}
+          valueClassName="text-emerald-600"
+        />
 
-        <article className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
-          <p className="text-sm text-slate-500">Total Expenses</p>
-          <p className="mt-1 text-2xl font-semibold text-rose-600">
-            {formatCurrency(totalExpenses)}
-          </p>
-        </article>
+        <SummaryStatCard
+          label="Total Expenses"
+          value={formatCurrency(totalExpenses)}
+          valueClassName="text-rose-600"
+        />
       </div>
 
-      <article className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
-        <h2 className="mb-3 text-lg font-semibold text-slate-900">
-          Spending by Category
-        </h2>
+      <DashboardChartSection title="Spending by Category">
+        <ResponsiveContainer width="100%" height="100%">
+          <BarChart data={categoryBreakdown}>
+            <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" />
+            <XAxis dataKey="category" />
+            <YAxis />
+            <Tooltip
+              formatter={(value) => formatCurrency(Number(value ?? 0))}
+            />
+            <Bar dataKey="total" fill="var(--accent)" radius={[6, 6, 0, 0]} />
+          </BarChart>
+        </ResponsiveContainer>
+      </DashboardChartSection>
 
-        <div className="h-72">
-          <ResponsiveContainer width="100%" height="100%">
-            <BarChart data={categoryBreakdown}>
-              <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" />
-              <XAxis dataKey="category" />
-              <YAxis />
-              <Tooltip
-                formatter={(value) => formatCurrency(Number(value ?? 0))}
-              />
-              <Bar dataKey="total" fill="var(--accent)" radius={[6, 6, 0, 0]} />
-            </BarChart>
-          </ResponsiveContainer>
-        </div>
-      </article>
-
-      <article className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
-        <h2 className="mb-1 text-lg font-semibold text-slate-900">
-          Spending Trend (Last 6 Months)
-        </h2>
-        <p className="mb-3 text-sm text-slate-500">
-          Monthly expense totals from your transaction dataset
-        </p>
-
-        <div className="h-72">
-          <ResponsiveContainer width="100%" height="100%">
-            <AreaChart data={spendingTrend}>
-              <defs>
-                <linearGradient id="spendingArea" x1="0" y1="0" x2="0" y2="1">
-                  <stop
-                    offset="5%"
-                    stopColor="var(--accent)"
-                    stopOpacity={0.35}
-                  />
-                  <stop
-                    offset="95%"
-                    stopColor="var(--accent)"
-                    stopOpacity={0.02}
-                  />
-                </linearGradient>
-              </defs>
-              <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" />
-              <XAxis dataKey="month" />
-              <YAxis />
-              <Tooltip
-                formatter={(value) => formatCurrency(Number(value ?? 0))}
-              />
-              <Area
-                type="monotone"
-                dataKey="total"
-                stroke="var(--accent)"
-                strokeWidth={2.5}
-                fill="url(#spendingArea)"
-              />
-            </AreaChart>
-          </ResponsiveContainer>
-        </div>
-      </article>
+      <DashboardChartSection
+        title="Spending Trend (Last 6 Months)"
+        description="Monthly expense totals from your transaction dataset"
+      >
+        <ResponsiveContainer width="100%" height="100%">
+          <AreaChart data={spendingTrend}>
+            <defs>
+              <linearGradient id="spendingArea" x1="0" y1="0" x2="0" y2="1">
+                <stop
+                  offset="5%"
+                  stopColor="var(--accent)"
+                  stopOpacity={0.35}
+                />
+                <stop
+                  offset="95%"
+                  stopColor="var(--accent)"
+                  stopOpacity={0.02}
+                />
+              </linearGradient>
+            </defs>
+            <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" />
+            <XAxis dataKey="month" />
+            <YAxis />
+            <Tooltip
+              formatter={(value) => formatCurrency(Number(value ?? 0))}
+            />
+            <Area
+              type="monotone"
+              dataKey="total"
+              stroke="var(--accent)"
+              strokeWidth={2.5}
+              fill="url(#spendingArea)"
+            />
+          </AreaChart>
+        </ResponsiveContainer>
+      </DashboardChartSection>
     </section>
   );
 };
