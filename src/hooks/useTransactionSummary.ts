@@ -51,10 +51,12 @@ export const useTransactionSummary = (): TransactionSummary => {
       .sort((item1, item2) => item2.total - item1.total);
 
     // finding spending trend
-    const sortedTransactions = transactions.sort(
+    const sortedTransactions = [...transactions].sort(
       (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
     );
-    const latestTransactionDate = new Date(sortedTransactions[0].date);
+    const latestTransactionDate = sortedTransactions[0]
+      ? new Date(sortedTransactions[0].date)
+      : new Date();
     const spendingTrend = Array.from({ length: 6 }, (_, index) => {
       const monthOffset = index - 5;
       const monthDate = latestTransactionDate

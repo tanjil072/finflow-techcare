@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-import { MOCK_TRANSACTIONS } from "../mockData";
 import type { Transaction } from "../types";
+import { getInitialTransactions } from "../utils/transactionHelpers";
 
 interface TransactionStore {
   transactions: Transaction[];
@@ -16,7 +16,7 @@ const generateTransactionId = (): string =>
 export const useTransactionStore = create<TransactionStore>()(
   persist(
     (set) => ({
-      transactions: MOCK_TRANSACTIONS,
+      transactions: getInitialTransactions(),
       addTransaction: (transaction) =>
         set((state) => ({
           transactions: [
@@ -28,7 +28,7 @@ export const useTransactionStore = create<TransactionStore>()(
           ],
         })),
       setTransactions: (transactions) => set({ transactions }),
-      resetTransactions: () => set({ transactions: MOCK_TRANSACTIONS }),
+      resetTransactions: () => set({ transactions: getInitialTransactions() }),
     }),
     {
       name: "finflow-transactions-storage",
