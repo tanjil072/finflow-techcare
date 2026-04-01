@@ -1,4 +1,5 @@
 import { DashboardSummary } from "./components/DashboardSummary";
+import TransactionSummary from "./components/TransactionSummary";
 
 function App() {
   return (
@@ -6,6 +7,7 @@ function App() {
       <div className="mx-auto max-w-6xl">
         <div className="space-y-6">
           <DashboardSummary />
+          <TransactionSummary />
         </div>
       </div>
     </main>
