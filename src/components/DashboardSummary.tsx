@@ -1,4 +1,6 @@
 import {
+  Area,
+  AreaChart,
   Bar,
   BarChart,
   CartesianGrid,
@@ -11,8 +13,13 @@ import { useTransactionSummary } from "../hooks/useTransactionSummary";
 import { formatCurrency } from "../utils/formatters";
 
 export const DashboardSummary = () => {
-  const { totalBalance, totalIncome, totalExpenses, categoryBreakdown } =
-    useTransactionSummary();
+  const {
+    totalBalance,
+    totalIncome,
+    totalExpenses,
+    categoryBreakdown,
+    spendingTrend,
+  } = useTransactionSummary();
 
   return (
     <section className="space-y-6">
@@ -60,6 +67,49 @@ export const DashboardSummary = () => {
               />
               <Bar dataKey="total" fill="var(--accent)" radius={[6, 6, 0, 0]} />
             </BarChart>
+          </ResponsiveContainer>
+        </div>
+      </article>
+
+      <article className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
+        <h2 className="mb-1 text-lg font-semibold text-slate-900">
+          Spending Trend (Last 6 Months)
+        </h2>
+        <p className="mb-3 text-sm text-slate-500">
+          Monthly expense totals from your transaction dataset
+        </p>
+
+        <div className="h-72">
+          <ResponsiveContainer width="100%" height="100%">
+            <AreaChart data={spendingTrend}>
+              <defs>
+                <linearGradient id="spendingArea" x1="0" y1="0" x2="0" y2="1">
+                  <stop
+                    offset="5%"
+                    stopColor="var(--accent)"
+                    stopOpacity={0.35}
+                  />
+                  <stop
+                    offset="95%"
+                    stopColor="var(--accent)"
+                    stopOpacity={0.02}
+                  />
+                </linearGradient>
+              </defs>
+              <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" />
+              <XAxis dataKey="month" />
+              <YAxis />
+              <Tooltip
+                formatter={(value) => formatCurrency(Number(value ?? 0))}
+              />
+              <Area
+                type="monotone"
+                dataKey="total"
+                stroke="var(--accent)"
+                strokeWidth={2.5}
+                fill="url(#spendingArea)"
+              />
+            </AreaChart>
           </ResponsiveContainer>
         </div>
       </article>
