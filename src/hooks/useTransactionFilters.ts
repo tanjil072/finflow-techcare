@@ -1,9 +1,9 @@
 import { useMemo, useState } from "react";
-import { TRANSACTION_CATEGORIES } from "../mockData";
-import type {
-  Transaction,
-  TransactionCategory,
-  TransactionStatus,
+import {
+  TRANSACTION_CATEGORIES,
+  type Transaction,
+  type TransactionCategory,
+  type TransactionStatus,
 } from "../types";
 
 const TRANSACTION_STATUSES: readonly TransactionStatus[] = [

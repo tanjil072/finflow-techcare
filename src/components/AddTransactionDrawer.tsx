@@ -1,11 +1,11 @@
 import { useMemo, useRef, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
-import { TRANSACTION_CATEGORIES } from "../mockData";
 import { useTransactionStore } from "../store/transactionStore";
-import type {
-  TransactionCategory,
-  TransactionStatus,
-  TransactionType,
+import {
+  TRANSACTION_CATEGORIES,
+  type TransactionCategory,
+  type TransactionStatus,
+  type TransactionType,
 } from "../types";
 import { toDateInputString } from "../utils/formatters";
 import { Button } from "./ui/button";

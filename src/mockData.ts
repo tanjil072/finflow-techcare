@@ -1,4 +1,4 @@
-import type { Transaction } from "./types";
+import { type Transaction } from "./types";
 
 export const MOCK_TRANSACTIONS: Transaction[] = [
   {
@@ -317,14 +317,3 @@ export const MOCK_TRANSACTIONS: Transaction[] = [
     status: "completed",
   },
 ];
-
-export const TRANSACTION_CATEGORIES = [
-  "Food",
-  "Transport",
-  "Utilities",
-  "Entertainment",
-  "Health",
-  "Shopping",
-  "Income",
-  "Other",
-] as const;
