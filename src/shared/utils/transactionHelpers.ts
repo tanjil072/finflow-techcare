@@ -1,5 +1,5 @@
-import { MOCK_TRANSACTIONS } from "../mockData";
-import type { Transaction } from "../types";
+import type { Transaction } from "../../features/transactions/types";
+import { MOCK_TRANSACTIONS } from "../../mockData";
 
 export const cloneTransactions = (transactions: Transaction[]): Transaction[] =>
   transactions.map((transaction) => ({ ...transaction }));

@@ -1,6 +1,6 @@
 import { Toaster } from "sonner";
-import { DashboardSummary } from "./components/DashboardSummary";
-import TransactionSummary from "./components/TransactionSummary";
+import { DashboardSummary } from "./features/dashboard";
+import { TransactionSummary } from "./features/transactions";
 
 function App() {
   return (

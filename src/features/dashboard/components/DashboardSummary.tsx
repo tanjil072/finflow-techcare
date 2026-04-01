@@ -9,8 +9,8 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
-import { useTransactionSummary } from "../hooks/useTransactionSummary";
-import { formatCurrency } from "../utils/formatters";
+import { formatCurrency } from "../../../shared/utils/formatters";
+import { useTransactionSummary } from "../../transactions/hooks/useTransactionSummary";
 
 export const DashboardSummary = () => {
   const {

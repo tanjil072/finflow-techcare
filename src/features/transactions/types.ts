@@ -5,7 +5,7 @@ import {
   TransactionSortFieldEnum,
   TransactionStatusEnum,
   type TransactionTypeEnum,
-} from "./constants/global";
+} from "../../shared/constants/global";
 
 export type TransactionType =
   (typeof TransactionTypeEnum)[keyof typeof TransactionTypeEnum];
