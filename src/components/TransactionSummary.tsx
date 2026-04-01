@@ -141,7 +141,7 @@ const TransactionSummary = () => {
               <SelectItem value={FILTER_ALL_VALUE}>All Status</SelectItem>
               {transactionStatuses.map((status) => (
                 <SelectItem key={status} value={status}>
-                  {status}
+                  {status.charAt(0).toUpperCase() + status.slice(1)}
                 </SelectItem>
               ))}
             </SelectContent>
