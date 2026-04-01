@@ -1,73 +1,105 @@
-# React + TypeScript + Vite
+# FinFlow - Techcare Assessment
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+I built FinFlow as a personal finance dashboard using React, TypeScript, and Vite.
+My goal was to keep it clean, easy to read, and practical from a user perspective.
 
-Currently, two official plugins are available:
+## Live Demo
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+https://thefinflow.vercel.app/
 
-## React Compiler
+## What I Built
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### Dashboard
 
-## Expanding the ESLint configuration
+- Total Balance, Total Income, and Total Expenses summary cards
+- Spending by Category bar chart
+- Spending Trend (last 6 months) area chart
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+### Transactions
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+- Transaction table with virtualized rendering for smoother scrolling, 8 transactions shows at a time and its configurable
+- Search by description
+- Filters by category and status
+- Sorting by date/amount with ascending and descending order
+- Clear filters button
+- Add Transaction drawer with form validation
+- Success toast when a new transaction is added
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+### Data & State
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+- Mock transaction dataset for initial data
+- Zustand store with persistence
+- Data stays available after refresh (persisted in localstorage)
+
+## Tech Stack
+
+- React 19
+- TypeScript
+- Vite
+- Tailwind CSS
+- Zustand
+- React Hook Form
+- Recharts
+- Sonner
+- Radix / Vaul UI primitives
+
+## Project Structure
+
+I followed a feature-first structure:
+
+- `dashboard` for analytics and chart UI
+- `transactions` for filters, table, hooks, and store
+- `shared` for reusable UI primitives, constants, and utility functions
+
+This helped me keep business logic close to each feature and avoid unnecessary abstractions.
+
+## Design Choices
+
+- I kept most components feature-local unless there was clear repeated usage.
+- I extracted repeated UI blocks only where it improved readability.
+- I kept hook state in parent/container components when multiple UI blocks needed the same data.
+- I added virtual list behavior in transactions to keep rendering efficient.
+- I used strong typing across transactions, filters, statuses, and categories.
+
+## Run Locally
+
+### Prerequisites
+
+- Node.js 18+
+- npm
+
+### Install
+
+```bash
+npm install
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### Start dev server
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm run dev
 ```
+
+### Build
+
+```bash
+npm run build
+```
+
+### Lint
+
+```bash
+npm run lint
+```
+
+### Preview production build
+
+```bash
+npm run preview
+```
+
+## Notes
+
+- This is a client-side implementation using mock data.
+- Transactions are persisted in browser storage.
+- I prioritized clarity and maintainability over premature abstraction.
