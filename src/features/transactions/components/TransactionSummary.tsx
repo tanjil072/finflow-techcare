@@ -1,11 +1,23 @@
 import { toast } from "sonner";
+import { Badge } from "../../../shared/components/ui/badge";
+import { Button } from "../../../shared/components/ui/button";
+import { Input } from "../../../shared/components/ui/input";
+import { Label } from "../../../shared/components/ui/label";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "../../../shared/components/ui/select";
 import {
   FILTER_ALL_VALUE,
   TRANSACTION_STATUS_BADGE_VARIANTS,
   TRANSACTION_TYPE_STYLES,
   TransactionSortDirectionEnum,
   TransactionSortFieldEnum,
-} from "../constants/global";
+} from "../../../shared/constants/global";
+import { formatCurrency, formatDate } from "../../../shared/utils/formatters";
 import {
   useTransactionFilters,
   type CategoryFilter,
@@ -15,19 +27,7 @@ import {
 } from "../hooks/useTransactionFilters";
 import { useTransactionList } from "../hooks/useTransactionList";
 import { useTransactionStore } from "../store/transactionStore";
-import { formatCurrency, formatDate } from "../utils/formatters";
 import AddTransactionDrawer from "./AddTransactionDrawer";
-import { Badge } from "./ui/badge";
-import { Button } from "./ui/button";
-import { Input } from "./ui/input";
-import { Label } from "./ui/label";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "./ui/select";
 
 const TransactionSummary = () => {
   const transactions = useTransactionStore((state) => state.transactions);

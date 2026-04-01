@@ -4,7 +4,7 @@ import {
   TRANSACTION_CATEGORIES,
   TransactionSortDirectionEnum,
   TransactionSortFieldEnum,
-} from "../constants/global";
+} from "../../../shared/constants/global";
 import {
   TRANSACTION_STATUSES,
   type CategoryFilter,

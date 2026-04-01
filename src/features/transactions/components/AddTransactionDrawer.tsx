@@ -1,19 +1,6 @@
 import { useMemo, useRef, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
-import {
-  DEFAULT_NEW_TRANSACTION_VALUES,
-  TRANSACTION_CATEGORIES,
-  TransactionTypeEnum,
-} from "../constants/global";
-import { useTransactionStore } from "../store/transactionStore";
-import {
-  TRANSACTION_STATUSES,
-  type TransactionCategory,
-  type TransactionStatus,
-  type TransactionType,
-} from "../types";
-import { toDateInputString } from "../utils/formatters";
-import { Button } from "./ui/button";
+import { Button } from "../../../shared/components/ui/button";
 import {
   Drawer,
   DrawerClose,
@@ -23,16 +10,29 @@ import {
   DrawerHeader,
   DrawerTitle,
   DrawerTrigger,
-} from "./ui/drawer";
-import { Input } from "./ui/input";
-import { Label } from "./ui/label";
+} from "../../../shared/components/ui/drawer";
+import { Input } from "../../../shared/components/ui/input";
+import { Label } from "../../../shared/components/ui/label";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "./ui/select";
+} from "../../../shared/components/ui/select";
+import {
+  DEFAULT_NEW_TRANSACTION_VALUES,
+  TRANSACTION_CATEGORIES,
+  TransactionTypeEnum,
+} from "../../../shared/constants/global";
+import { toDateInputString } from "../../../shared/utils/formatters";
+import { useTransactionStore } from "../store/transactionStore";
+import {
+  TRANSACTION_STATUSES,
+  type TransactionCategory,
+  type TransactionStatus,
+  type TransactionType,
+} from "../types";
 
 interface AddTransactionDrawerProps {
   onSuccess?: (description: string) => void;

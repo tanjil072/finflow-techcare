@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
+import { getInitialTransactions } from "../../../shared/utils/transactionHelpers";
 import type { Transaction } from "../types";
-import { getInitialTransactions } from "../utils/transactionHelpers";
 
 interface TransactionStore {
   transactions: Transaction[];
