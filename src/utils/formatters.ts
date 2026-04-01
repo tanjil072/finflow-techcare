@@ -15,3 +15,6 @@ export const formatCurrency = (amount: number): string =>
 
 export const formatDate = (date: string | Date): string =>
   dateFormatter.format(new Date(date));
+
+export const toDateInputString = (date: Date) =>
+  date.toISOString().split("T")[0];

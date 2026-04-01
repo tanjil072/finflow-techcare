@@ -1,3 +1,4 @@
+import { toast } from "sonner";
 import {
   useTransactionFilters,
   type CategoryFilter,
@@ -9,7 +10,11 @@ import { useTransactionList } from "../hooks/useTransactionList";
 import { useTransactionStore } from "../store/transactionStore";
 import type { TransactionStatus } from "../types";
 import { formatCurrency, formatDate } from "../utils/formatters";
+import AddTransactionDrawer from "./AddTransactionDrawer";
 import { Badge } from "./ui/badge";
+import { Button } from "./ui/button";
+import { Input } from "./ui/input";
+import { Label } from "./ui/label";
 import {
   Select,
   SelectContent,
@@ -69,22 +74,27 @@ const TransactionSummary = () => {
       <div className="mb-4 flex items-center justify-between">
         <h2 className="text-lg font-semibold text-slate-900">Transactions</h2>
         <div className="flex items-center gap-3">
+          <AddTransactionDrawer
+            onSuccess={(description) => {
+              toast.success(`Transaction "${description}" added successfully.`);
+              setScrollTop(0);
+            }}
+          />
+
           <p className="text-sm text-slate-500">
             {processedTransactions.length} of {transactions.length} records
           </p>
-          <button
-            onClick={handleClearFilters}
-            className="rounded px-3 py-1.5 text-sm font-medium border border-slate-500 text-slate-600 hover:bg-slate-100 active:bg-slate-200"
-          >
+          <Button onClick={handleClearFilters} variant="outline" size="sm">
             Clear
-          </button>
+          </Button>
         </div>
       </div>
 
       <div className="mb-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-        <label className="lg:col-span-4 flex flex-col gap-1 text-sm text-slate-600">
-          Search
-          <input
+        <div className="lg:col-span-4 flex flex-col gap-1">
+          <Label htmlFor="transaction-search">Search</Label>
+          <Input
+            id="transaction-search"
             type="text"
             placeholder="Search by description..."
             value={searchQuery}
@@ -92,12 +102,11 @@ const TransactionSummary = () => {
               setSearchQuery(e.target.value);
               setScrollTop(0);
             }}
-            className="rounded border border-slate-300 px-3 py-2 text-sm text-slate-900 placeholder-slate-400 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
           />
-        </label>
+        </div>
 
-        <label className="flex flex-col gap-1 text-sm text-slate-600">
-          Category
+        <div className="flex flex-col gap-1">
+          <Label>Category</Label>
           <Select
             value={categoryFilter}
             onValueChange={(value) => {
@@ -117,10 +126,10 @@ const TransactionSummary = () => {
               ))}
             </SelectContent>
           </Select>
-        </label>
+        </div>
 
-        <label className="flex flex-col gap-1 text-sm text-slate-600">
-          Status
+        <div className="flex flex-col gap-1">
+          <Label>Status</Label>
           <Select
             value={statusFilter}
             onValueChange={(value) => {
@@ -140,10 +149,10 @@ const TransactionSummary = () => {
               ))}
             </SelectContent>
           </Select>
-        </label>
+        </div>
 
-        <label className="flex flex-col gap-1 text-sm text-slate-600">
-          Sort By
+        <div className="flex flex-col gap-1">
+          <Label>Sort By</Label>
           <Select
             value={sortField}
             onValueChange={(value) => {
@@ -159,10 +168,10 @@ const TransactionSummary = () => {
               <SelectItem value="amount">Amount</SelectItem>
             </SelectContent>
           </Select>
-        </label>
+        </div>
 
-        <label className="flex flex-col gap-1 text-sm text-slate-600">
-          Sort Order
+        <div className="flex flex-col gap-1">
+          <Label>Sort Order</Label>
           <Select
             value={sortDirection}
             onValueChange={(value) => {
@@ -178,7 +187,7 @@ const TransactionSummary = () => {
               <SelectItem value="asc">Ascending</SelectItem>
             </SelectContent>
           </Select>
-        </label>
+        </div>
       </div>
 
       <div className="overflow-x-auto">
