@@ -1,21 +1,18 @@
 import { useMemo, useState } from "react";
 import {
+  FILTER_ALL_VALUE,
   TRANSACTION_CATEGORIES,
+  TransactionSortDirectionEnum,
+  TransactionSortFieldEnum,
+} from "../constants/global";
+import {
+  TRANSACTION_STATUSES,
+  type CategoryFilter,
+  type SortDirection,
+  type SortField,
+  type StatusFilter,
   type Transaction,
-  type TransactionCategory,
-  type TransactionStatus,
 } from "../types";
-
-const TRANSACTION_STATUSES: readonly TransactionStatus[] = [
-  "completed",
-  "pending",
-  "failed",
-];
-
-type SortField = "date" | "amount";
-type SortDirection = "asc" | "desc";
-type CategoryFilter = "all" | TransactionCategory;
-type StatusFilter = "all" | TransactionStatus;
 
 const sortTransactions = (
   transactions: Transaction[],
@@ -23,9 +20,10 @@ const sortTransactions = (
   sortDirection: SortDirection,
 ) => {
   return [...transactions].sort((firstTransaction, secondTransaction) => {
-    const directionMultiplier = sortDirection === "asc" ? 1 : -1;
+    const directionMultiplier =
+      sortDirection === TransactionSortDirectionEnum.Asc ? 1 : -1;
 
-    if (sortField === "amount") {
+    if (sortField === TransactionSortFieldEnum.Amount) {
       return (
         (firstTransaction.amount - secondTransaction.amount) *
         directionMultiplier
@@ -41,18 +39,26 @@ const sortTransactions = (
 };
 
 export const useTransactionFilters = (transactions: Transaction[]) => {
-  const [categoryFilter, setCategoryFilter] = useState<CategoryFilter>("all");
-  const [statusFilter, setStatusFilter] = useState<StatusFilter>("all");
-  const [sortField, setSortField] = useState<SortField>("date");
-  const [sortDirection, setSortDirection] = useState<SortDirection>("desc");
+  const [categoryFilter, setCategoryFilter] =
+    useState<CategoryFilter>(FILTER_ALL_VALUE);
+  const [statusFilter, setStatusFilter] =
+    useState<StatusFilter>(FILTER_ALL_VALUE);
+  const [sortField, setSortField] = useState<SortField>(
+    TransactionSortFieldEnum.Date,
+  );
+  const [sortDirection, setSortDirection] = useState<SortDirection>(
+    TransactionSortDirectionEnum.Desc,
+  );
   const [searchQuery, setSearchQuery] = useState<string>("");
 
   const processedTransactions = useMemo(() => {
     const filteredTransactions = transactions.filter((transaction) => {
       const matchesCategory =
-        categoryFilter === "all" || transaction.category === categoryFilter;
+        categoryFilter === FILTER_ALL_VALUE ||
+        transaction.category === categoryFilter;
       const matchesStatus =
-        statusFilter === "all" || transaction.status === statusFilter;
+        statusFilter === FILTER_ALL_VALUE ||
+        transaction.status === statusFilter;
       const matchesSearch =
         searchQuery === "" ||
         transaction.description
@@ -89,4 +95,9 @@ export const useTransactionFilters = (transactions: Transaction[]) => {
   };
 };
 
-export type { CategoryFilter, SortDirection, SortField, StatusFilter };
+export type {
+  CategoryFilter,
+  SortDirection,
+  SortField,
+  StatusFilter,
+} from "../types";

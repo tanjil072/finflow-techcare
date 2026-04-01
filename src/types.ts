@@ -1,19 +1,31 @@
-export type TransactionType = "income" | "expense";
+import {
+  FILTER_ALL_VALUE,
+  TRANSACTION_CATEGORIES,
+  TransactionSortDirectionEnum,
+  TransactionSortFieldEnum,
+  TransactionStatusEnum,
+  type TransactionTypeEnum,
+} from "./constants/global";
 
-export type TransactionStatus = "completed" | "pending" | "failed";
+export type TransactionType =
+  (typeof TransactionTypeEnum)[keyof typeof TransactionTypeEnum];
 
-export const TRANSACTION_CATEGORIES = [
-  "Food",
-  "Transport",
-  "Utilities",
-  "Entertainment",
-  "Health",
-  "Shopping",
-  "Income",
-  "Other",
-] as const;
+export const TRANSACTION_STATUSES = Object.values(TransactionStatusEnum);
+
+export type TransactionStatus =
+  (typeof TransactionStatusEnum)[keyof typeof TransactionStatusEnum];
+
+export type SortField =
+  (typeof TransactionSortFieldEnum)[keyof typeof TransactionSortFieldEnum];
+
+export type SortDirection =
+  (typeof TransactionSortDirectionEnum)[keyof typeof TransactionSortDirectionEnum];
 
 export type TransactionCategory = (typeof TRANSACTION_CATEGORIES)[number];
+
+export type CategoryFilter = typeof FILTER_ALL_VALUE | TransactionCategory;
+
+export type StatusFilter = typeof FILTER_ALL_VALUE | TransactionStatus;
 
 export interface Transaction {
   id: string;

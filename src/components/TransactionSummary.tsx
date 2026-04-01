@@ -1,5 +1,12 @@
 import { toast } from "sonner";
 import {
+  FILTER_ALL_VALUE,
+  TRANSACTION_STATUS_BADGE_VARIANTS,
+  TRANSACTION_TYPE_STYLES,
+  TransactionSortDirectionEnum,
+  TransactionSortFieldEnum,
+} from "../constants/global";
+import {
   useTransactionFilters,
   type CategoryFilter,
   type SortDirection,
@@ -8,7 +15,6 @@ import {
 } from "../hooks/useTransactionFilters";
 import { useTransactionList } from "../hooks/useTransactionList";
 import { useTransactionStore } from "../store/transactionStore";
-import type { TransactionStatus } from "../types";
 import { formatCurrency, formatDate } from "../utils/formatters";
 import AddTransactionDrawer from "./AddTransactionDrawer";
 import { Badge } from "./ui/badge";
@@ -22,15 +28,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "./ui/select";
-
-const statusBadgeVariants: Record<
-  TransactionStatus,
-  "success" | "warning" | "danger"
-> = {
-  completed: "success",
-  pending: "warning",
-  failed: "danger",
-};
 
 const TransactionSummary = () => {
   const transactions = useTransactionStore((state) => state.transactions);
@@ -61,10 +58,10 @@ const TransactionSummary = () => {
   } = useTransactionList(processedTransactions);
 
   const handleClearFilters = () => {
-    setCategoryFilter("all");
-    setStatusFilter("all");
-    setSortField("date");
-    setSortDirection("desc");
+    setCategoryFilter(FILTER_ALL_VALUE);
+    setStatusFilter(FILTER_ALL_VALUE);
+    setSortField(TransactionSortFieldEnum.Date);
+    setSortDirection(TransactionSortDirectionEnum.Desc);
     setSearchQuery("");
     setScrollTop(0);
   };
@@ -118,7 +115,7 @@ const TransactionSummary = () => {
               <SelectValue placeholder="All Categories" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="all">All Categories</SelectItem>
+              <SelectItem value={FILTER_ALL_VALUE}>All Categories</SelectItem>
               {transactionCategories.map((category) => (
                 <SelectItem key={category} value={category}>
                   {category}
@@ -141,7 +138,7 @@ const TransactionSummary = () => {
               <SelectValue placeholder="All Status" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="all">All Status</SelectItem>
+              <SelectItem value={FILTER_ALL_VALUE}>All Status</SelectItem>
               {transactionStatuses.map((status) => (
                 <SelectItem key={status} value={status}>
                   {status}
@@ -164,8 +161,12 @@ const TransactionSummary = () => {
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="date">Date</SelectItem>
-              <SelectItem value="amount">Amount</SelectItem>
+              <SelectItem value={TransactionSortFieldEnum.Date}>
+                Date
+              </SelectItem>
+              <SelectItem value={TransactionSortFieldEnum.Amount}>
+                Amount
+              </SelectItem>
             </SelectContent>
           </Select>
         </div>
@@ -183,8 +184,12 @@ const TransactionSummary = () => {
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="desc">Descending</SelectItem>
-              <SelectItem value="asc">Ascending</SelectItem>
+              <SelectItem value={TransactionSortDirectionEnum.Desc}>
+                Descending
+              </SelectItem>
+              <SelectItem value={TransactionSortDirectionEnum.Asc}>
+                Ascending
+              </SelectItem>
             </SelectContent>
           </Select>
         </div>
@@ -207,38 +212,45 @@ const TransactionSummary = () => {
           >
             {topSpacerHeight > 0 && <div style={{ height: topSpacerHeight }} />}
 
-            {visibleTransactions.map((transaction) => (
-              <div
-                key={transaction.id}
-                className="grid grid-cols-[140px_1.8fr_1fr_1fr_120px] items-center border-t border-slate-100 px-4 text-sm hover:bg-slate-50"
-                style={{ height: `${rowHeightPx}px` }}
-              >
-                <span className="whitespace-nowrap text-slate-600">
-                  {formatDate(transaction.date)}
-                </span>
-                <span className="pr-4 font-medium text-slate-900">
-                  {transaction.description}
-                </span>
-                <span className="whitespace-nowrap text-slate-600">
-                  {transaction.category}
-                </span>
-                <span
-                  className={`whitespace-nowrap font-semibold ${
-                    transaction.type === "income"
-                      ? "text-emerald-600"
-                      : "text-rose-600"
-                  }`}
+            {visibleTransactions.map((transaction) => {
+              const transactionTypeStyle =
+                TRANSACTION_TYPE_STYLES[transaction.type];
+
+              return (
+                <div
+                  key={transaction.id}
+                  className="grid grid-cols-[140px_1.8fr_1fr_1fr_120px] items-center border-t border-slate-100 px-4 text-sm hover:bg-slate-50"
+                  style={{ height: `${rowHeightPx}px` }}
                 >
-                  {transaction.type === "income" ? "+" : "-"}
-                  {formatCurrency(transaction.amount)}
-                </span>
-                <span>
-                  <Badge variant={statusBadgeVariants[transaction.status]}>
-                    {transaction.status}
-                  </Badge>
-                </span>
-              </div>
-            ))}
+                  <span className="whitespace-nowrap text-slate-600">
+                    {formatDate(transaction.date)}
+                  </span>
+                  <span className="pr-4 font-medium text-slate-900">
+                    {transaction.description}
+                  </span>
+                  <span className="whitespace-nowrap text-slate-600">
+                    {transaction.category}
+                  </span>
+                  <span
+                    className={`whitespace-nowrap font-semibold ${
+                      transactionTypeStyle.amountClassName
+                    }`}
+                  >
+                    {transactionTypeStyle.sign}
+                    {formatCurrency(transaction.amount)}
+                  </span>
+                  <span>
+                    <Badge
+                      variant={
+                        TRANSACTION_STATUS_BADGE_VARIANTS[transaction.status]
+                      }
+                    >
+                      {transaction.status}
+                    </Badge>
+                  </span>
+                </div>
+              );
+            })}
 
             {bottomSpacerHeight > 0 && (
               <div style={{ height: bottomSpacerHeight }} />

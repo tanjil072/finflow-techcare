@@ -1,4 +1,5 @@
 import { useMemo } from "react";
+import { TransactionTypeEnum } from "../constants/global";
 import { useTransactionStore } from "../store/transactionStore";
 
 interface CategoryBreakdownItem {
@@ -18,14 +19,16 @@ export const useTransactionSummary = (): TransactionSummary => {
 
   return useMemo(() => {
     const totalIncome = transactions
-      .filter((transaction) => transaction.type === "income")
+      .filter((transaction) => transaction.type === TransactionTypeEnum.Income)
       .reduce((sum, transaction) => sum + transaction.amount, 0);
     const totalExpenses = transactions
-      .filter((transaction) => transaction.type === "expense")
+      .filter((transaction) => transaction.type === TransactionTypeEnum.Expense)
       .reduce((sum, transaction) => sum + transaction.amount, 0);
 
     const categoryObject = transactions
-      .filter((transactions) => transactions.type === "expense")
+      .filter(
+        (transactions) => transactions.type === TransactionTypeEnum.Expense,
+      )
       .reduce<Record<string, number>>((acc, transaction) => {
         acc[transaction.category] =
           (acc[transaction.category] || 0) + transaction.amount;

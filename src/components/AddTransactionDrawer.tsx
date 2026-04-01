@@ -1,8 +1,13 @@
 import { useMemo, useRef, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
+import {
+  DEFAULT_NEW_TRANSACTION_VALUES,
+  TRANSACTION_CATEGORIES,
+  TransactionTypeEnum,
+} from "../constants/global";
 import { useTransactionStore } from "../store/transactionStore";
 import {
-  TRANSACTION_CATEGORIES,
+  TRANSACTION_STATUSES,
   type TransactionCategory,
   type TransactionStatus,
   type TransactionType,
@@ -42,12 +47,6 @@ interface FormValues {
   status: TransactionStatus;
 }
 
-const TRANSACTION_STATUSES: readonly TransactionStatus[] = [
-  "completed",
-  "pending",
-  "failed",
-];
-
 const AddTransactionDrawer = ({ onSuccess }: AddTransactionDrawerProps) => {
   const addTransaction = useTransactionStore((state) => state.addTransaction);
   const [isOpen, setIsOpen] = useState(false);
@@ -65,10 +64,10 @@ const AddTransactionDrawer = ({ onSuccess }: AddTransactionDrawerProps) => {
     defaultValues: {
       description: "",
       amount: 0,
-      type: "expense",
-      category: "Food",
+      type: DEFAULT_NEW_TRANSACTION_VALUES.type,
+      category: DEFAULT_NEW_TRANSACTION_VALUES.category,
       date: today,
-      status: "completed",
+      status: DEFAULT_NEW_TRANSACTION_VALUES.status,
     },
   });
 
@@ -100,10 +99,10 @@ const AddTransactionDrawer = ({ onSuccess }: AddTransactionDrawerProps) => {
     reset({
       description: "",
       amount: 0,
-      type: "expense",
-      category: "Food",
+      type: DEFAULT_NEW_TRANSACTION_VALUES.type,
+      category: DEFAULT_NEW_TRANSACTION_VALUES.category,
       date: today,
-      status: "completed",
+      status: DEFAULT_NEW_TRANSACTION_VALUES.status,
     });
   };
 
@@ -180,8 +179,12 @@ const AddTransactionDrawer = ({ onSuccess }: AddTransactionDrawerProps) => {
                         <SelectValue placeholder="Select type" />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="income">Income</SelectItem>
-                        <SelectItem value="expense">Expense</SelectItem>
+                        <SelectItem value={TransactionTypeEnum.Income}>
+                          Income
+                        </SelectItem>
+                        <SelectItem value={TransactionTypeEnum.Expense}>
+                          Expense
+                        </SelectItem>
                       </SelectContent>
                     </Select>
                   )}
