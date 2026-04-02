@@ -99,34 +99,30 @@ This layout keeps business logic close to the feature that uses it and avoids tu
 
 ## State Management
 
-I used Zustand for application state, mainly to manage transactions and their derived data.
+I used Zustand for application state, mainly for transactions and their derived interactions.
 
 The reasoning was:
 
-- I already had experience with Zustand, and given the limited time, it made more sense to rely on a familiar tool rather than introducing a new state management solution and losing focus on core functionality.
-- The app only requires a small amount of shared state, so a lightweight solution with minimal boilerplate was a better fit.
-- Zustand is simple, readable, and easy to maintain.
-- Persistence is straightforward, allowing the store to be saved in browser storage with minimal setup.
+- I chose to use Zustand because I already had experience with it, and given the limited time, it made more sense to rely on something I’m comfortable with rather than trying to learn and implement a new state management solution without focusing on core functionality.
+- The app only needs a small amount of shared state and zustand is very simple with minimal boilerplate code to implement
+- Zustand is lightweight and easy to read
+- The store is persisted to browser storage easily with zustand
 
 ## Trade-offs
 
-I made a few deliberate decisions to stay focused on the assessment scope:
+I made a few deliberate shortcuts to stay focused on the assessment scope:
 
-- Prioritized core functionality over detailed UI refinements.
-- Used prebuilt UI components from shadcn (e.g., Button, Input, Drawer, Label) to speed up development and maintain consistency.
-- The search by description is instant as this is a mock data but if the data was coming from api I'd have used debouncing method.
-- Persisted data in localStorage rather than setting up a database or API layer.
-- Limited the scope of features (e.g., no authentication or multi-user support) to avoid unnecessary complexity.
-- Focused on a clean and maintainable structure instead of premature optimization or over-architecting.
+- Focused on core functionality over ui improvements
+- used built-in ui libraries from shadcn like button,input,drawer,label,etc.
+- The transaction drawer and virtualized list were implemented in a practical, lightweight way instead of introducing heavier abstractions
 
-- ## What I Would Improve Next
+## What I Would Improve Next
 
-Given more time, I would extend this into a more complete product by:
+Given more time, I would extend this into a fuller product by:
 
-- Adding date range filtering for transactions, as this is a common and expected feature in finance applications.
-- Providing options to export reports (e.g., PDF or Excel) for better usability and data portability.
-- Expanding analytics with more insights (e.g., spending trends by category over time, comparisons, forecasts).
-- Adding unit and integration tests to ensure reliability and maintainability.
+- I'd have added filtering transaction with date range as this is the standard approach to FinTech apps.
+- I'd also add the option to export reports in pdf/excel.
+- Adding optimistic updates, error handling, and loading states for networked operations.
 
 ## Notes
 
