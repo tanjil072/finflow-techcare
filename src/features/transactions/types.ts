@@ -10,8 +10,6 @@ import {
 export type TransactionType =
   (typeof TransactionTypeEnum)[keyof typeof TransactionTypeEnum];
 
-export const TRANSACTION_STATUSES = Object.values(TransactionStatusEnum);
-
 export type TransactionStatus =
   (typeof TransactionStatusEnum)[keyof typeof TransactionStatusEnum];
 

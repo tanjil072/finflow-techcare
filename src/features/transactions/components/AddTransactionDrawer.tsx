@@ -23,12 +23,12 @@ import {
 import {
   DEFAULT_NEW_TRANSACTION_VALUES,
   TRANSACTION_CATEGORIES,
+  TRANSACTION_STATUSES,
   TransactionTypeEnum,
 } from "../../../shared/constants/global";
 import { toDateInputString } from "../../../shared/utils/formatters";
 import { useTransactionStore } from "../store/transactionStore";
 import {
-  TRANSACTION_STATUSES,
   type TransactionCategory,
   type TransactionStatus,
   type TransactionType,

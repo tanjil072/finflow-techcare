@@ -54,3 +54,5 @@ export const TRANSACTION_TYPE_STYLES = {
     amountClassName: "text-rose-600",
   },
 } as const;
+
+export const TRANSACTION_STATUSES = Object.values(TransactionStatusEnum);

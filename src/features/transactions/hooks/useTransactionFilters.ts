@@ -2,11 +2,11 @@ import { useMemo, useState } from "react";
 import {
   FILTER_ALL_VALUE,
   TRANSACTION_CATEGORIES,
+  TRANSACTION_STATUSES,
   TransactionSortDirectionEnum,
   TransactionSortFieldEnum,
 } from "../../../shared/constants/global";
 import {
-  TRANSACTION_STATUSES,
   type CategoryFilter,
   type SortDirection,
   type SortField,
@@ -94,10 +94,3 @@ export const useTransactionFilters = (transactions: Transaction[]) => {
     transactionStatuses: TRANSACTION_STATUSES,
   };
 };
-
-export type {
-  CategoryFilter,
-  SortDirection,
-  SortField,
-  StatusFilter,
-} from "../types";
