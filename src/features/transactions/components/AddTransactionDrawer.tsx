@@ -21,10 +21,10 @@ import {
   SelectValue,
 } from "../../../shared/components/ui/select";
 import {
-  DEFAULT_NEW_TRANSACTION_VALUES,
-  TRANSACTION_CATEGORIES,
-  TRANSACTION_STATUSES,
-  TransactionTypeEnum,
+  defaultNewTransactionValues,
+  transactionCategories,
+  transactionStatuses,
+  transactionTypeEnum,
 } from "../../../shared/constants/global";
 import { toDateInputString } from "../../../shared/utils/formatters";
 import { useTransactionStore } from "../store/transactionStore";
@@ -63,10 +63,10 @@ const AddTransactionDrawer = ({ onSuccess }: AddTransactionDrawerProps) => {
     defaultValues: {
       description: "",
       amount: 0,
-      type: DEFAULT_NEW_TRANSACTION_VALUES.type,
-      category: DEFAULT_NEW_TRANSACTION_VALUES.category,
+      type: defaultNewTransactionValues.type,
+      category: defaultNewTransactionValues.category,
       date: today,
-      status: DEFAULT_NEW_TRANSACTION_VALUES.status,
+      status: defaultNewTransactionValues.status,
     },
   });
 
@@ -94,10 +94,10 @@ const AddTransactionDrawer = ({ onSuccess }: AddTransactionDrawerProps) => {
     reset({
       description: "",
       amount: 0,
-      type: DEFAULT_NEW_TRANSACTION_VALUES.type,
-      category: DEFAULT_NEW_TRANSACTION_VALUES.category,
+      type: defaultNewTransactionValues.type,
+      category: defaultNewTransactionValues.category,
       date: today,
-      status: DEFAULT_NEW_TRANSACTION_VALUES.status,
+      status: defaultNewTransactionValues.status,
     });
   };
 
@@ -174,10 +174,10 @@ const AddTransactionDrawer = ({ onSuccess }: AddTransactionDrawerProps) => {
                         <SelectValue placeholder="Select type" />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value={TransactionTypeEnum.Income}>
+                        <SelectItem value={transactionTypeEnum.Income}>
                           Income
                         </SelectItem>
-                        <SelectItem value={TransactionTypeEnum.Expense}>
+                        <SelectItem value={transactionTypeEnum.Expense}>
                           Expense
                         </SelectItem>
                       </SelectContent>
@@ -203,7 +203,7 @@ const AddTransactionDrawer = ({ onSuccess }: AddTransactionDrawerProps) => {
                         <SelectValue placeholder="Select category" />
                       </SelectTrigger>
                       <SelectContent>
-                        {TRANSACTION_CATEGORIES.map((category) => (
+                        {transactionCategories.map((category) => (
                           <SelectItem key={category} value={category}>
                             {category}
                           </SelectItem>
@@ -249,7 +249,7 @@ const AddTransactionDrawer = ({ onSuccess }: AddTransactionDrawerProps) => {
                       <SelectValue placeholder="Select status" />
                     </SelectTrigger>
                     <SelectContent>
-                      {TRANSACTION_STATUSES.map((status) => (
+                      {transactionStatuses.map((status) => (
                         <SelectItem key={status} value={status}>
                           {status.charAt(0).toUpperCase() + status.slice(1)}
                         </SelectItem>

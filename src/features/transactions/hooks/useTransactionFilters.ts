@@ -1,10 +1,8 @@
 import { useMemo, useState } from "react";
 import {
-  FILTER_ALL_VALUE,
-  TRANSACTION_CATEGORIES,
-  TRANSACTION_STATUSES,
-  TransactionSortDirectionEnum,
-  TransactionSortFieldEnum,
+  filterAllValue,
+  transactionSortDirectionEnum,
+  transactionSortFieldEnum,
 } from "../../../shared/constants/global";
 import {
   type CategoryFilter,
@@ -21,9 +19,9 @@ const sortTransactions = (
 ) => {
   return [...transactions].sort((firstTransaction, secondTransaction) => {
     const directionMultiplier =
-      sortDirection === TransactionSortDirectionEnum.Asc ? 1 : -1;
+      sortDirection === transactionSortDirectionEnum.Asc ? 1 : -1;
 
-    if (sortField === TransactionSortFieldEnum.Amount) {
+    if (sortField === transactionSortFieldEnum.Amount) {
       return (
         (firstTransaction.amount - secondTransaction.amount) *
         directionMultiplier
@@ -40,25 +38,24 @@ const sortTransactions = (
 
 export const useTransactionFilters = (transactions: Transaction[]) => {
   const [categoryFilter, setCategoryFilter] =
-    useState<CategoryFilter>(FILTER_ALL_VALUE);
+    useState<CategoryFilter>(filterAllValue);
   const [statusFilter, setStatusFilter] =
-    useState<StatusFilter>(FILTER_ALL_VALUE);
+    useState<StatusFilter>(filterAllValue);
   const [sortField, setSortField] = useState<SortField>(
-    TransactionSortFieldEnum.Date,
+    transactionSortFieldEnum.Date,
   );
   const [sortDirection, setSortDirection] = useState<SortDirection>(
-    TransactionSortDirectionEnum.Desc,
+    transactionSortDirectionEnum.Desc,
   );
   const [searchQuery, setSearchQuery] = useState<string>("");
 
   const processedTransactions = useMemo(() => {
     const filteredTransactions = transactions.filter((transaction) => {
       const matchesCategory =
-        categoryFilter === FILTER_ALL_VALUE ||
+        categoryFilter === filterAllValue ||
         transaction.category === categoryFilter;
       const matchesStatus =
-        statusFilter === FILTER_ALL_VALUE ||
-        transaction.status === statusFilter;
+        statusFilter === filterAllValue || transaction.status === statusFilter;
       const matchesSearch =
         searchQuery === "" ||
         transaction.description
@@ -90,7 +87,5 @@ export const useTransactionFilters = (transactions: Transaction[]) => {
     setSortField,
     setSortDirection,
     setSearchQuery,
-    transactionCategories: TRANSACTION_CATEGORIES,
-    transactionStatuses: TRANSACTION_STATUSES,
   };
 };

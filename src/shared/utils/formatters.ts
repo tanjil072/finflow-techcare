@@ -1,18 +1,18 @@
-const LOCALE = "en-US";
+const locale = "en-US";
 
-const currencyFormatter = new Intl.NumberFormat(LOCALE, {
+const currencyFormatter = new Intl.NumberFormat(locale, {
   style: "currency",
   currency: "BDT",
   maximumFractionDigits: 0,
 });
 
-const dateFormatter = new Intl.DateTimeFormat(LOCALE, {
+const dateFormatter = new Intl.DateTimeFormat(locale, {
   day: "2-digit",
   month: "short",
   year: "numeric",
 });
 
-const monthShortFormatter = new Intl.DateTimeFormat(LOCALE, {
+const monthShortFormatter = new Intl.DateTimeFormat(locale, {
   month: "short",
 });
 

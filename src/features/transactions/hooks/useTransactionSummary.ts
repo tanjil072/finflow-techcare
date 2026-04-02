@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 
-import { TransactionTypeEnum } from "../../../shared/constants/global";
+import { transactionTypeEnum } from "../../../shared/constants/global";
 import { formatMonthShort } from "../../../shared/utils/formatters";
 import { useTransactionStore } from "../store/transactionStore";
 
@@ -27,22 +27,27 @@ export const useTransactionSummary = (): TransactionSummary => {
 
   return useMemo(() => {
     const totalIncome = transactions
-      .filter((transaction) => transaction.type === TransactionTypeEnum.Income)
-      .reduce((sum, transaction) => sum + transaction.amount, 0);
-    const totalExpenses = transactions
-      .filter((transaction) => transaction.type === TransactionTypeEnum.Expense)
+      .filter((transaction) => transaction.type === transactionTypeEnum.Income)
       .reduce((sum, transaction) => sum + transaction.amount, 0);
 
-    const categoryObject = transactions
-      .filter(
-        (transactions) => transactions.type === TransactionTypeEnum.Expense,
-      )
-      .reduce<Record<string, number>>((acc, transaction) => {
+    const filteredExpenses = transactions.filter(
+      (transactions) => transactions.type === transactionTypeEnum.Expense,
+    );
+
+    const totalExpenses = filteredExpenses.reduce(
+      (sum, transaction) => sum + transaction.amount,
+      0,
+    );
+
+    const categoryObject = filteredExpenses.reduce<Record<string, number>>(
+      (acc, transaction) => {
         acc[transaction.category] =
           (acc[transaction.category] || 0) + transaction.amount;
 
         return acc;
-      }, {});
+      },
+      {},
+    );
 
     // category breakdown
     const categoryBreakdown = Object.entries(categoryObject)
@@ -58,6 +63,7 @@ export const useTransactionSummary = (): TransactionSummary => {
     const latestTransactionDate = sortedTransactions[0]
       ? new Date(sortedTransactions[0].date)
       : new Date();
+
     const spendingTrend = Array.from({ length: 6 }, (_, index) => {
       const monthOffset = index - 5;
       const monthDate = latestTransactionDate
@@ -75,7 +81,7 @@ export const useTransactionSummary = (): TransactionSummary => {
       const total = transactions
         .filter(
           (t) =>
-            t.type === TransactionTypeEnum.Expense &&
+            t.type === transactionTypeEnum.Expense &&
             t.date.startsWith(monthKey),
         )
         .reduce((sum, t) => sum + t.amount, 0);

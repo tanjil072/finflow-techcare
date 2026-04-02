@@ -11,11 +11,13 @@ import {
   SelectValue,
 } from "../../../shared/components/ui/select";
 import {
-  FILTER_ALL_VALUE,
-  TRANSACTION_STATUS_BADGE_VARIANTS,
-  TRANSACTION_TYPE_STYLES,
-  TransactionSortDirectionEnum,
-  TransactionSortFieldEnum,
+  filterAllValue,
+  transactionCategories,
+  transactionSortDirectionEnum,
+  transactionSortFieldEnum,
+  transactionStatusBadgeVariants,
+  transactionStatuses,
+  transactionTypeStyles,
 } from "../../../shared/constants/global";
 import { formatCurrency, formatDate } from "../../../shared/utils/formatters";
 import { useTransactionFilters } from "../hooks/useTransactionFilters";
@@ -44,8 +46,6 @@ const TransactionSummary = () => {
     setSortField,
     setSortDirection,
     setSearchQuery,
-    transactionCategories,
-    transactionStatuses,
   } = useTransactionFilters(transactions);
 
   const {
@@ -53,15 +53,15 @@ const TransactionSummary = () => {
     topSpacerHeight,
     bottomSpacerHeight,
     setScrollTop,
-    viewPortHeightPx,
+    viewportHeightPx,
     rowHeightPx,
   } = useTransactionList(processedTransactions);
 
   const handleClearFilters = () => {
-    setCategoryFilter(FILTER_ALL_VALUE);
-    setStatusFilter(FILTER_ALL_VALUE);
-    setSortField(TransactionSortFieldEnum.Date);
-    setSortDirection(TransactionSortDirectionEnum.Desc);
+    setCategoryFilter(filterAllValue);
+    setStatusFilter(filterAllValue);
+    setSortField(transactionSortFieldEnum.Date);
+    setSortDirection(transactionSortDirectionEnum.Desc);
     setSearchQuery("");
     setScrollTop(0);
   };
@@ -115,7 +115,7 @@ const TransactionSummary = () => {
               <SelectValue placeholder="All Categories" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value={FILTER_ALL_VALUE}>All Categories</SelectItem>
+              <SelectItem value={filterAllValue}>All Categories</SelectItem>
               {transactionCategories.map((category) => (
                 <SelectItem key={category} value={category}>
                   {category}
@@ -138,7 +138,7 @@ const TransactionSummary = () => {
               <SelectValue placeholder="All Status" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value={FILTER_ALL_VALUE}>All Status</SelectItem>
+              <SelectItem value={filterAllValue}>All Status</SelectItem>
               {transactionStatuses.map((status) => (
                 <SelectItem key={status} value={status}>
                   {status.charAt(0).toUpperCase() + status.slice(1)}
@@ -161,10 +161,10 @@ const TransactionSummary = () => {
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value={TransactionSortFieldEnum.Date}>
+              <SelectItem value={transactionSortFieldEnum.Date}>
                 Date
               </SelectItem>
-              <SelectItem value={TransactionSortFieldEnum.Amount}>
+              <SelectItem value={transactionSortFieldEnum.Amount}>
                 Amount
               </SelectItem>
             </SelectContent>
@@ -184,10 +184,10 @@ const TransactionSummary = () => {
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value={TransactionSortDirectionEnum.Desc}>
+              <SelectItem value={transactionSortDirectionEnum.Desc}>
                 Descending
               </SelectItem>
-              <SelectItem value={TransactionSortDirectionEnum.Asc}>
+              <SelectItem value={transactionSortDirectionEnum.Asc}>
                 Ascending
               </SelectItem>
             </SelectContent>
@@ -207,14 +207,14 @@ const TransactionSummary = () => {
 
           <div
             className="overflow-y-auto"
-            style={{ height: `${viewPortHeightPx}px` }}
+            style={{ height: `${viewportHeightPx}px` }}
             onScroll={(event) => setScrollTop(event.currentTarget.scrollTop)}
           >
             {topSpacerHeight > 0 && <div style={{ height: topSpacerHeight }} />}
 
             {visibleTransactions.map((transaction) => {
               const transactionTypeStyle =
-                TRANSACTION_TYPE_STYLES[transaction.type];
+                transactionTypeStyles[transaction.type];
 
               return (
                 <div
@@ -242,7 +242,7 @@ const TransactionSummary = () => {
                   <span>
                     <Badge
                       variant={
-                        TRANSACTION_STATUS_BADGE_VARIANTS[transaction.status]
+                        transactionStatusBadgeVariants[transaction.status]
                       }
                     >
                       {transaction.status}

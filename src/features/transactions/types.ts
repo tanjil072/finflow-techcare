@@ -1,29 +1,29 @@
 import {
-  FILTER_ALL_VALUE,
-  TRANSACTION_CATEGORIES,
-  TransactionSortDirectionEnum,
-  TransactionSortFieldEnum,
-  TransactionStatusEnum,
-  type TransactionTypeEnum,
+  filterAllValue,
+  transactionCategories,
+  transactionSortDirectionEnum,
+  transactionSortFieldEnum,
+  transactionStatusEnum,
+  transactionTypeEnum,
 } from "../../shared/constants/global";
 
 export type TransactionType =
-  (typeof TransactionTypeEnum)[keyof typeof TransactionTypeEnum];
+  (typeof transactionTypeEnum)[keyof typeof transactionTypeEnum];
 
 export type TransactionStatus =
-  (typeof TransactionStatusEnum)[keyof typeof TransactionStatusEnum];
+  (typeof transactionStatusEnum)[keyof typeof transactionStatusEnum];
 
 export type SortField =
-  (typeof TransactionSortFieldEnum)[keyof typeof TransactionSortFieldEnum];
+  (typeof transactionSortFieldEnum)[keyof typeof transactionSortFieldEnum];
 
 export type SortDirection =
-  (typeof TransactionSortDirectionEnum)[keyof typeof TransactionSortDirectionEnum];
+  (typeof transactionSortDirectionEnum)[keyof typeof transactionSortDirectionEnum];
 
-export type TransactionCategory = (typeof TRANSACTION_CATEGORIES)[number];
+export type TransactionCategory = (typeof transactionCategories)[number];
 
-export type CategoryFilter = typeof FILTER_ALL_VALUE | TransactionCategory;
+export type CategoryFilter = typeof filterAllValue | TransactionCategory;
 
-export type StatusFilter = typeof FILTER_ALL_VALUE | TransactionStatus;
+export type StatusFilter = typeof filterAllValue | TransactionStatus;
 
 export interface Transaction {
   id: string;

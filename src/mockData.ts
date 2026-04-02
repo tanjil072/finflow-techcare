@@ -1,6 +1,6 @@
 import { type Transaction } from "./features/transactions/types";
 
-export const MOCK_TRANSACTIONS: Transaction[] = [
+export const mockTransactions: Transaction[] = [
   {
     id: "txn_001",
     description: "Netflix Subscription",

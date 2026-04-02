@@ -1,27 +1,27 @@
-export const TransactionTypeEnum = {
+export const transactionTypeEnum = {
   Income: "income",
   Expense: "expense",
 } as const;
 
-export const TransactionStatusEnum = {
+export const transactionStatusEnum = {
   Completed: "completed",
   Pending: "pending",
   Failed: "failed",
 } as const;
 
-export const TransactionSortFieldEnum = {
+export const transactionSortFieldEnum = {
   Date: "date",
   Amount: "amount",
 } as const;
 
-export const TransactionSortDirectionEnum = {
+export const transactionSortDirectionEnum = {
   Asc: "asc",
   Desc: "desc",
 } as const;
 
-export const FILTER_ALL_VALUE = "all" as const;
+export const filterAllValue = "all" as const;
 
-export const TRANSACTION_CATEGORIES = [
+export const transactionCategories = [
   "Food",
   "Transport",
   "Utilities",
@@ -32,27 +32,27 @@ export const TRANSACTION_CATEGORIES = [
   "Other",
 ] as const;
 
-export const DEFAULT_NEW_TRANSACTION_VALUES = {
-  type: TransactionTypeEnum.Expense,
+export const defaultNewTransactionValues = {
+  type: transactionTypeEnum.Expense,
   category: "Food",
-  status: TransactionStatusEnum.Completed,
+  status: transactionStatusEnum.Completed,
 } as const;
 
-export const TRANSACTION_STATUS_BADGE_VARIANTS = {
-  [TransactionStatusEnum.Completed]: "success",
-  [TransactionStatusEnum.Pending]: "warning",
-  [TransactionStatusEnum.Failed]: "danger",
+export const transactionStatusBadgeVariants = {
+  [transactionStatusEnum.Completed]: "success",
+  [transactionStatusEnum.Pending]: "warning",
+  [transactionStatusEnum.Failed]: "danger",
 } as const;
 
-export const TRANSACTION_TYPE_STYLES = {
-  [TransactionTypeEnum.Income]: {
+export const transactionTypeStyles = {
+  [transactionTypeEnum.Income]: {
     sign: "+",
     amountClassName: "text-emerald-600",
   },
-  [TransactionTypeEnum.Expense]: {
+  [transactionTypeEnum.Expense]: {
     sign: "-",
     amountClassName: "text-rose-600",
   },
 } as const;
 
-export const TRANSACTION_STATUSES = Object.values(TransactionStatusEnum);
+export const transactionStatuses = Object.values(transactionStatusEnum);
