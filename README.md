@@ -94,8 +94,15 @@ For reference: https://dev.to/homayounmmdy/modular-architecture-in-react-how-to-
 - `src/features/transactions` contains the transaction table, filters, drawer form, hooks, types, and store.
 - `src/shared` contains reusable UI components, constants, and utility helpers used across features.
 - `src/lib` contains low-level helpers shared by the component layer.
+- `src/features/transactions/hooks/useTransactionSummary.ts` calculates total balance, total income, expense, category breakdown and spending trend
+- `src/features/transactions/hooks/useTransactionList.ts` its the configuration for virtualized list of transactions
+- `src/features/transactions/hooks/useTransactionFilters.ts` it handles the filtering transactions based on category, status, sorting in asc/dsc and searching
 
 This layout keeps business logic close to the feature that uses it and avoids turning the project into a generic component library.
+
+## System Architecture at a Glance
+
+![FinFlow Architecture Diagram](src/assets/architectural_diagram.png)
 
 ## State Management
 
