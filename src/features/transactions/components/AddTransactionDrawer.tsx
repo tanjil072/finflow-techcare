@@ -1,4 +1,4 @@
-import { useMemo, useRef, useState } from "react";
+import { useMemo, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { Button } from "../../../shared/components/ui/button";
 import {
@@ -50,7 +50,6 @@ interface FormValues {
 const AddTransactionDrawer = ({ onSuccess }: AddTransactionDrawerProps) => {
   const addTransaction = useTransactionStore((state) => state.addTransaction);
   const [isOpen, setIsOpen] = useState(false);
-  const dateInputRef = useRef<HTMLInputElement | null>(null);
 
   const today = useMemo(() => toDateInputString(new Date()), []);
 
@@ -71,12 +70,8 @@ const AddTransactionDrawer = ({ onSuccess }: AddTransactionDrawerProps) => {
     },
   });
 
-  const openDatePicker = () => {
-    const input = dateInputRef.current as
-      | (HTMLInputElement & { showPicker?: () => void })
-      | null;
-
-    input?.showPicker?.();
+  const openDatePicker = (input: HTMLInputElement) => {
+    (input as HTMLInputElement & { showPicker?: () => void }).showPicker?.();
   };
 
   const { ref: dateFieldRef, ...dateFieldProps } = register("date", {
@@ -232,12 +227,8 @@ const AddTransactionDrawer = ({ onSuccess }: AddTransactionDrawerProps) => {
                 type="date"
                 max={today}
                 {...dateFieldProps}
-                ref={(element) => {
-                  dateFieldRef(element);
-                  dateInputRef.current = element;
-                }}
-                onFocus={openDatePicker}
-                onClick={openDatePicker}
+                ref={dateFieldRef}
+                onClick={(event) => openDatePicker(event.currentTarget)}
               />
               {errors.date && (
                 <span className="text-xs text-rose-600">
