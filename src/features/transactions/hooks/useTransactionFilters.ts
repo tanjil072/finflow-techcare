@@ -57,10 +57,15 @@ export const useTransactionFilters = (transactions: Transaction[]) => {
       const matchesStatus =
         statusFilter === filterAllValue || transaction.status === statusFilter;
       const matchesSearch =
-        searchQuery === "" ||
+        // searchQuery.length >= 3 &&
+        (searchQuery == "" || searchQuery.length > 3) &&
         transaction.description
           .toLowerCase()
           .includes(searchQuery.toLowerCase());
+
+      // searchQuery === "" ||
+      // searchQuery.length >= 3 ||
+      transaction.description.toLowerCase().includes(searchQuery.toLowerCase());
 
       return matchesCategory && matchesStatus && matchesSearch;
     });

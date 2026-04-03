@@ -30,6 +30,7 @@ export const transactionCategories = [
   "Shopping",
   "Income",
   "Other",
+  "Uncategorized",
 ] as const;
 
 export const defaultNewTransactionValues = {

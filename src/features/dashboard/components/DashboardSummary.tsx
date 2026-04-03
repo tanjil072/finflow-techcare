@@ -47,6 +47,12 @@ export const DashboardSummary = () => {
           value={formatCurrency(totalExpenses)}
           valueClassName="text-rose-600"
         />
+
+        <SummaryStatCard
+          label="Net Balance"
+          value={formatCurrency(totalExpenses)}
+          valueClassName="text-rose-600"
+        />
       </div>
 
       <DashboardChartSection title="Spending by Category">
